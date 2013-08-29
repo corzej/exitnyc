@@ -1,2 +1,26 @@
-<h1>MapPages#home</h1>
-<p>Find me in app/views/map_pages/home.html.erb</p>
+<% provide(:title, 'Home') %>
+
+    <div id="map-canvas" style="width: 40%; height: 100%;float:left"></div>
+    <div id="pano" style="width: 40%; height: 100%;float:left"></div>
+    <div id="panoInfo" style="width: 20%; height: 100%;float:left">
+    <table>
+      <tr>
+        <td><b>Position</b></td><td id="position_cell">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><b>POV Heading</b></td><td id="heading_cell">270</td>
+      </tr>
+      <tr>
+        <td><b>POV Pitch</b></td><td id="pitch_cell">0.0</td>
+      </tr>
+      <tr>
+        <td><b>Pano ID</b></td><td id="pano_cell">&nbsp;</td>
+      </tr>
+      <tr>
+      </tr>
+      <table id="links_table"></table>
+    </table>
+    </div>
+    <%(2..101).each do |n|%>
+    <h1> <%= @sheet[n,2] %> </h1>
+    <%end%>

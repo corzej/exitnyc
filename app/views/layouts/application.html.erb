@@ -1,11 +1,105 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Exitnyc</title>
+  <title>Exitnyc | <%= yield(:title) %> </title>
+  <%= include_gon %>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
-</head>
+
+    <link href="/maps/documentation/javascript/examples/default.css" rel="stylesheet">
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script>
+
+var panorama;
+var sv = new google.maps.StreetViewService();
+var map;
+var images = 'assets/arrow_0@2x.png';
+
+function initialize() {
+
+	var mapOptions = {
+		zoom: 14,
+		center: new google.maps.LatLng(40.798466,-73.941882),
+		mapTypeId: google.maps.MapTypeId.ROADMAP,
+    mapTypeControl: false,
+	};
+	var panoramaOptions = {
+    position: new google.maps.LatLng(40.798466,-73.941882),
+    pov: {
+      heading: 270,
+      pitch: 0
+    },
+    visible: true
+  };
+
+  panorama = new google.maps.StreetViewPanorama(document.getElementById('pano'),panoramaOptions);
+	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  map.setStreetView(panorama);
+  var infowindow = new google.maps.InfoWindow(), marker, i;
+// parsing data    
+	for (i in myJson)
+	{
+		var myLatlng = new google.maps.LatLng(myJson[i].Latitude,myJson[i].Longitude);
+		var marker = new google.maps.Marker({
+      position: myLatlng,
+      map: map,
+      title: myJson[i].Station_Name,
+      icon: images
+    });	 
+      	   
+    google.maps.event.addListener(marker, 'click', (function(marker, i) {
+	    return function(){
+			  infowindow.setContent('Number: '+ myJson[i].Num+'*** station Name: ' + myJson[i].Station_Name )
+			  infowindow.open(map,this);
+			}
+		})(marker, i));
+	}
+
+  google.maps.event.addListener(panorama, 'pano_changed', function() {
+      var panoCell = document.getElementById('pano_cell');
+      panoCell.innerHTML = panorama.getPano();
+  });
+
+  google.maps.event.addListener(panorama, 'links_changed', function() {
+      var linksTable = document.getElementById('links_table');
+      while(linksTable.hasChildNodes()) {
+        linksTable.removeChild(linksTable.lastChild);
+      };
+      var links =  panorama.getLinks();
+      for (var i in links) {
+        var row = document.createElement('tr');
+        linksTable.appendChild(row);
+        var labelCell = document.createElement('td');
+        labelCell.innerHTML = '<b>Link: ' + i + '</b>';
+        var valueCell = document.createElement('td');
+        valueCell.innerHTML = links[i].description;
+        linksTable.appendChild(labelCell);
+        linksTable.appendChild(valueCell);
+      }
+  });
+
+  google.maps.event.addListener(panorama, 'position_changed', function() {
+      var positionCell = document.getElementById('position_cell');
+      positionCell.firstChild.nodeValue = panorama.getPosition() + '';
+  });
+
+  google.maps.event.addListener(panorama, 'pov_changed', function() {
+      var headingCell = document.getElementById('heading_cell');
+      var pitchCell = document.getElementById('pitch_cell');
+      headingCell.firstChild.nodeValue = panorama.getPov().heading + '';
+      pitchCell.firstChild.nodeValue = panorama.getPov().pitch + '';
+  });
+}
+
+var myJson = gon.json;
+  
+console.log(myJson);
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+  </head>
 <body>
 
 <%= yield %>
