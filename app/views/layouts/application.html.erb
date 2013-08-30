@@ -14,8 +14,7 @@
 var panorama;
 var sv = new google.maps.StreetViewService();
 var map;
-var images = 'assets/arrow_0@2x.png';
-
+var images ;
 function initialize() {
 
 	var mapOptions = {
@@ -41,11 +40,12 @@ function initialize() {
 	for (i in myJson)
 	{
 		var myLatlng = new google.maps.LatLng(myJson[i].Latitude,myJson[i].Longitude);
+    images = gon.degreeAr[i];
 		var marker = new google.maps.Marker({
       position: myLatlng,
       map: map,
       title: myJson[i].Station_Name,
-      icon: "<%= asset_path('arrow_0@2x.png') %>"
+      icon: images
     });	 
       	   
     google.maps.event.addListener(marker, 'click', (function(marker, i) {
