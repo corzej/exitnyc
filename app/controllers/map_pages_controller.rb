@@ -11,7 +11,7 @@ class MapPagesController < ApplicationController
   	#gon.json = @sheet.rows
   	arr =[]
   	(2..1863).each do |n|
-  		data = {@sheet[1,1] => @sheet[n,1], @sheet[1,2] => @sheet[n,2], @sheet[1,3] => @sheet[n,3], @sheet[1,4] => @sheet[n,4]}
+  		data = {@sheet[1,1] => @sheet[n,1], @sheet[1,2] => @sheet[n,2], @sheet[1,3] => @sheet[n,3], @sheet[1,4] => @sheet[n,4], @sheet[1,5] => @sheet[n,5]}
   		data = data.to_json
   		arr << JSON.load(data)
   	end
