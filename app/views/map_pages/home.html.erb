@@ -18,9 +18,21 @@
       </tr>
       <tr>
       </tr>
+      <tr>
+        <td><b>Number</b></td><td id="number">&nbsp;</td>
+      </tr>
+      <tr>
+        <td><b>Degree</b></td><td id="degree">&nbsp;</td>
+      </tr>
       <table id="links_table"></table>
     </table>
+
+    <p>New Degree: 
+    <input id = "NewDegree" type="number" name="newdegree" /> 
+    <input type = "submit" name="newsubmit" value="submit to server" />
+    </p>
     </div>
+
     <%(2..101).each do |n|%>
     <h1> <%= @sheet[n,2] %> </h1>
     <%end%>

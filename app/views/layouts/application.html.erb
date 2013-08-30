@@ -50,8 +50,10 @@ function initialize() {
       	   
     google.maps.event.addListener(marker, 'click', (function(marker, i) {
 	    return function(){
-			  infowindow.setContent('Number: '+ myJson[i].Num+'*** station Name: ' + myJson[i].Station_Name )
+			  infowindow.setContent('Number: '+ myJson[i].Num+ ' degree is:  '+myJson[i].Dir +'*** station Name: ' + myJson[i].Station_Name  )
 			  infowindow.open(map,this);
+        document.getElementById('number').innerHTML =myJson[i].Num;
+        document.getElementById('degree').innerHTML =myJson[i].Dir.toString();
 			}
 		})(marker, i));
 	}
