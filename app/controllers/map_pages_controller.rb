@@ -5,7 +5,7 @@ class MapPagesController < ApplicationController
   	require "smarter_csv"
   	require "json"
 
-  	session =GoogleDrive.login("corzej@gmail.com", "e10oegong") 
+  	session =GoogleDrive.login("corzej@gmail.com", "dhfflavlr@129") 
   	@sheet = session.spreadsheet_by_title("ExitNYC").worksheets[0]
   	#file name will be using number of sheet
   	#gon.json = @sheet.rows
