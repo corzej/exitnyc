@@ -68,14 +68,14 @@ function initialize() {
       while(linksTable.hasChildNodes()) {
         linksTable.removeChild(linksTable.lastChild);
       };
-      var links =  panorama.getLinks();
+      var links =  panorama.getLinks(); 
       for (var i in links) {
         var row = document.createElement('tr');
         linksTable.appendChild(row);
         var labelCell = document.createElement('td');
         labelCell.innerHTML = '<b>Link: ' + i + '</b>';
         var valueCell = document.createElement('td');
-        valueCell.innerHTML = links[i].description;
+        valueCell.innerHTML = links[i].heading;
         linksTable.appendChild(labelCell);
         linksTable.appendChild(valueCell);
       }
